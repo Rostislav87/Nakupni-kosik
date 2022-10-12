@@ -28,7 +28,6 @@ kosik = {}
 
 oddelovac = "=" * 40
 
-
 # TODO Pozdrav a nabídka
 print(
     "Vitejte v nasem online nakupnim centru", 
@@ -38,13 +37,27 @@ print(
     sep="\n")
 
 # TODO celý cyklus
-while (zbozi := input("Zadej nazev zbozi:")) != "q":
+while (zbozi := input("Zadej nazev zbozi: ")) != "q":
     # TODO pokud zboží nebude v nabídce
+    if zbozi not in potraviny:
+        print(zbozi, "bohuzel neni v nabidce.")
 
     # TODO pokud vybrané zboží není v nákupním košíku
+    elif zbozi not in kosik and potraviny[zbozi][1] > 0:
+        kosik[zbozi] = [potraviny[zbozi], 1]
+        potraviny[zbozi][1] = potraviny[zbozi][1] - 1
+        print(kosik)
 
     # TODO pokud zboží je v košíku
+    elif zbozi in kosik and potraviny[zbozi][1] > 0:
+        kosik[zbozi][1] += 1
+        potraviny[zbozi][1] -= 1
+        print(kosik)
 
     # TODO pokud zboží již není skladem
+    elif potraviny[zbozi][1] == 0:
+        print(f"{zbozi} jiz neni k dispozici.")
 
 # TODO výpis košíku
+else:
+    print(oddelovac, kosik, sep="\n")
